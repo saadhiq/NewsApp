@@ -27,11 +27,12 @@ function Card(props) {
           <div className="origin flex flex-col">
             <p className="origin-item">
               <span className="font-semibold">Author:</span>
-              {props.author}
+              {/* set default value to author */}
+              {props.author || "Unknown"}
             </p>
             <p className="origin-item">
-              <span className="font-semibold">Published At:</span>
-              ({props.publishedAt})
+              <span className="font-semibold">Published At:</span>(
+              {props.publishedAt})
             </p>
           </div>
         </div>
