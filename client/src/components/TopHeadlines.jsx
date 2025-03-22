@@ -61,7 +61,7 @@ function TopHeadlines() {
               <EverythingCard
                 key={index}
                 title={element.title}
-                description={element.description}
+                description={element.summary}
                 imgUrl={element.urlToImage}
                 publishedAt={element.publishedAt}
                 url={element.url}

@@ -60,17 +60,24 @@ function AllNews() {
           data.map((element, index) => {
             const isGroup = !!element.group_id;
 
-            const urls = isGroup
-              ? element.articles.map((article) => article.url)
-              : [element.url];
+            if (
+              isGroup &&
+              (!element.articles || element.articles.length === 0)
+            ) {
+              return null; // Don't render the card if no articles exist
+            }
 
-            const sources = isGroup
-              ? element.articles.map((article) => article.source)
-              : [element.source];
+            const urls = isGroup
+              ? element.articles.map((article) => article.url).join(",")
+              : element.url;
+
+            const newsProviders = isGroup
+              ? element.articles.map((article) => article.source).join(",")
+              : element.source;
 
             return (
               <EverythingCard
-                key={isGroup ? element.group_id || index : element.url || index}
+                key={index}
                 title={isGroup ? element.representative_title : element.title}
                 description={element.summary}
                 imgUrl={
@@ -78,13 +85,13 @@ function AllNews() {
                     ? element.articles[0].cover_image
                     : element.cover_image
                 }
-                publishedAt={
+                publishedDate={
                   isGroup
                     ? element.articles[0].date_published
                     : element.date_published
                 }
-                url={urls}
-                source={sources}
+                newsProvider={newsProviders}
+                source={urls}
               />
             );
           })

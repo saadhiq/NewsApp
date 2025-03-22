@@ -2,8 +2,6 @@ import React from "react";
 
 function EverythingCard(props) {
   // Normalize props.url and props.source
-  const url = Array.isArray(props.url) ? props.url[0] : props.url;
-  const source = Array.isArray(props.source) ? props.source[0] : props.source;
 
   return (
     <div className="everything-card mt-10 shadow-lg rounded-lg overflow-hidden border bg-white">
@@ -24,32 +22,35 @@ function EverythingCard(props) {
         {/* Description */}
         <div className="description">
           <p className="description-text leading-6 text-gray-700">
-            {props.description?.substring(0, 200)}
+            {props.description}
           </p>
         </div>
 
         {/* Info Section */}
         <div className="info compact space-y-2">
-          <div className="source-info flex items-center gap-2">
-            <span className="font-semibold">Source:</span>
-            <a
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="link underline break-words text-blue-600"
-            >
-              {source?.substring(0, 70)}
-            </a>
+          <div className="source-info flex flex-col gap-1">
+            {props.source.split(",").map((url, idx) => (
+              <div key={idx} className="flex items-center gap-1">
+                <span className="font-semibold">Source {idx + 1}:</span>
+                <a
+                  href={url.trim()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 underline break-all"
+                >
+                  {url.trim()}
+                </a>
+              </div>
+            ))}
           </div>
+
           <div className="origin flex flex-col space-y-1 text-sm text-gray-600">
-            <p className="origin-item">
-              <span className="font-semibold">Author:</span>{" "}
-              {props.author || "Unknown"}
-            </p>
-            <p className="origin-item">
-              <span className="font-semibold">Published At:</span>{" "}
-              {props.publishedAt}
-            </p>
+            {props.newsProvider.split(",").map((provider, idx) => (
+              <p key={idx} className="origin-item">
+                <span className="font-semibold">News Provider {idx + 1}:</span>{" "}
+                {provider.trim()}
+              </p>
+            ))}
           </div>
         </div>
       </div>
