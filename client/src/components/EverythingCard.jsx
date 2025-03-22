@@ -1,52 +1,70 @@
 import React from "react";
 
-function Card(props) {
+function EverythingCard(props) {
+  // Normalize props.url and props.source
+  const url = Array.isArray(props.url) ? props.url[0] : props.url;
+  const source = Array.isArray(props.source) ? props.source[0] : props.source;
+
   return (
-    <div className="everything-card mt-10">
-      <div className="everything-card flex flex-wrap p-5 gap-1 mb-1">
-        <b className="title">{props.title}</b>
-        <div className="everything-card-img mx-auto ">
-          <img className="everything-card-img " src={props.imgUrl} alt="img" />
+    <div className="everything-card mt-10 shadow-lg rounded-lg overflow-hidden border bg-white">
+      {/* Main Card Content */}
+      <div className="p-5 flex flex-col gap-4">
+        {/* Title */}
+        <b className="title text-lg font-semibold">{props.title}</b>
+
+        {/* Image */}
+        <div className="everything-card-img mx-auto">
+          <img
+            className="w-full h-48 object-cover rounded"
+            src={props.imgUrl}
+            alt="news"
+          />
         </div>
+
+        {/* Description */}
         <div className="description">
-          <p className="description-text leading-7">
+          <p className="description-text leading-6 text-gray-700">
             {props.description?.substring(0, 200)}
           </p>
         </div>
-        <div className="info compact">
+
+        {/* Info Section */}
+        <div className="info compact space-y-2">
           <div className="source-info flex items-center gap-2">
             <span className="font-semibold">Source:</span>
             <a
-              href={props.url}
+              href={url}
               target="_blank"
-              className="link underline break-words"
+              rel="noopener noreferrer"
+              className="link underline break-words text-blue-600"
             >
-              {props.source.substring(0, 70)}
+              {source?.substring(0, 70)}
             </a>
           </div>
-          <div className="origin flex flex-col">
+          <div className="origin flex flex-col space-y-1 text-sm text-gray-600">
             <p className="origin-item">
-              <span className="font-semibold">Author:</span>
-              {/* set default value to author */}
+              <span className="font-semibold">Author:</span>{" "}
               {props.author || "Unknown"}
             </p>
             <p className="origin-item">
-              <span className="font-semibold">Published At:</span>(
-              {props.publishedAt})
+              <span className="font-semibold">Published At:</span>{" "}
+              {props.publishedAt}
             </p>
           </div>
         </div>
       </div>
 
-      {/* Added the new card content with styles */}
-      <div className="flex lg:flex-row">
+      {/* Optional: Extra Section at the bottom (if needed) */}
+      {/* You can remove this part if you don't need the "extra card" style */}
+
+      <div className="flex lg:flex-row mt-5">
         <div
           className="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
           style={{ backgroundImage: `url(${props.imageUrlLeft})` }}
           title={props.imageLeftTitle}
         ></div>
         <div className="border rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
-          <div className="mb-8">
+          <div className="mb-4">
             <p className="text-sm text-gray-600 flex items-center">
               {props.memberIcon && (
                 <svg
@@ -69,7 +87,7 @@ function Card(props) {
               <img
                 className="w-10 h-10 rounded-full mr-4"
                 src={props.authorImage}
-                alt="Avatar"
+                alt="Author"
               />
             )}
             <div className="text-sm">
@@ -83,4 +101,4 @@ function Card(props) {
   );
 }
 
-export default Card;
+export default EverythingCard;
